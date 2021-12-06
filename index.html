@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My absolute snake son</title>
     <style>
         body {
-            background: yellow; 
+            background: yellow;
             text-align: center;
         }
+
         canvas {
             border: 10px solid red;
         }
     </style>
 </head>
+
 <body>
     <canvas width="600" height="600"></canvas>
     <script>
-    // listeners
+        // listeners
         document.addEventListener('keydown', keyPush)
 
 
@@ -26,25 +29,24 @@
         const ctx = canvas.getContext("2d")
 
         //player
-        const snakeSize = 50;
-        let snakeSpeed = 5;
+        const snakeSize = 30;
+        let snakeSpeed = 30;
         let snakePosX = 0;
         let snakePosY = canvas.height / 2 - snakeSize / 2
 
-        let velocityX = 0;
+        let velocityX = 1;
         let velocityY = 0;
 
 
 
-      
+
 
         //lopp
         function gameLoop() {
             drawStuff()
             moveStuff()
-            
-            
-            requestAnimationFrame(gameLoop);
+            setTimeout(gameLoop, 1000 / 15);
+
 
         }
         gameLoop();
@@ -56,56 +58,80 @@
          * MOVE EVERTHIN
          */
 
-    function moveStuff() {
-       snakePosX += snakeSpeed * velocityX;
-       snakePosY += snakeSpeed * velocityY;
+        function moveStuff() {
+            snakePosX += snakeSpeed * velocityX;
+            snakePosY += snakeSpeed * velocityY;
 
 
-        if (snakePosX > canvas.width) {
-            snakePosX = 0;
+            if (snakePosX > canvas.width) {
+                snakePosX = 0;
+
+            }
+            if (snakePosX < -snakeSize) {
+                snakePosX = canvas.width;
+
+            }
+
+            if (snakePosY > canvas.height) {
+                snakePosY = 0;
+
+            }
+            if (snakePosY < -snakeSize) {
+                snakePosY = canvas.height;
+
+            }
         }
-    }
-    /** 
-     *DRAW EVRITHING
-    */
-    function drawStuff () {
-        rectangle('white',0, 0, canvas.width, canvas.height)
-        rectangle('black',snakePosX, snakePosY, snakeSize, snakeSize)
-        
-}
 
-// drawe rectangle
-function rectangle(color, x, y, width, height) {
-    ctx.fillStyle = color;
-        ctx.fillRect(x, y, width, height);  
-} 
+        /** 
+         *DRAW EVRITHING
+        */
+        function drawStuff() {
+            rectangle('white', 0, 0, canvas.width, canvas.height)
+            rectangle('black', snakePosX, snakePosY, snakeSize, snakeSize)
 
-/**
- * KEYBOARD
- */
-function keyPush(event) {
-    switch(event.key) {
-        case "ArrowLeft":
-            velocityX = -1;
-            velocityY = 0;
-            break;
-        case "ArrowUp":
-            velocityX = 0;
-            velocityY = -1;
-            break;
-        case "ArrowRight":
-            velocityX = 1;
-            velocityY = 0;
-            break;
-        case "ArrowDown":
-            velocityX = 0;
-            velocityY = 1;
-            break;
+        }
 
-    }
-}
- 
- </script>
+        // drawe rectangle
+        function rectangle(color, x, y, width, height) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, width, height);
+        }
+
+        /**
+         * KEYBOARD
+         */
+        function keyPush(event) {
+            switch (event.key) {
+                case "ArrowLeft":
+                    if (velocityX !== 1) {
+                        velocityX = -1;
+                        velocityY = 0;
+                    }
+                    break;
+                case "ArrowUp":
+                    if (velocityY !== 1) {
+                        velocityX = 0;
+                        velocityY = -1;
+                    }
+                    break;
+                case "ArrowRight":
+                    if (velocityX !== -1) {
+                        velocityX = 1;
+                        velocityY = 0;
+                    }
+                    break;
+                case "ArrowDown":
+                    if (velocityY !== -1) {
+                        velocityX = 0;
+                        velocityY = 1;
+                    }
+                    break;
+
+            }
+        }
+
+    </script>
 
 </body>
+
 </html>
