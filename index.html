@@ -7,7 +7,7 @@
     <title>My absolute snake son</title>
     <style>
         body {
-            background: yellow;
+            background: blue;
             text-align: center;
         }
 
@@ -44,7 +44,7 @@
         //lopp
         function gameLoop() {
             drawStuff()
-            moveStuff()
+            //moveStuff()
             setTimeout(gameLoop, 1000 / 15);
 
 
@@ -86,9 +86,17 @@
          *DRAW EVRITHING
         */
         function drawStuff() {
-            rectangle('white', 0, 0, canvas.width, canvas.height)
-            rectangle('black', snakePosX, snakePosY, snakeSize, snakeSize)
+            //background
 
+            rectangle('blue', 0, 0, canvas.width, canvas.height)
+
+            for (let i = 0; i < canvas.width / snakeSize; i++) {
+                for (let j = 0; j < canvas.height / snakeSize; j++) {
+                    rectangle("#fff", snakeSize * i, snakeSize * j, snakeSize - 1, snakeSize - 1);
+                }
+            }
+            //snake
+            rectangle('black', snakePosX, snakePosY, snakeSize, snakeSize);
         }
 
         // drawe rectangle
